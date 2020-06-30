@@ -1,0 +1,6 @@
+parameters:
+  events:
+    artistname:
+      name: artistname
+      description: using artistname we will fetchdata
+      required: true
