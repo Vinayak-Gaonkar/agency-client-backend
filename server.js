@@ -10,7 +10,7 @@ const swaggerUi = require("swagger-ui-express");
 
 const swaggerJsdoc = require("swagger-jsdoc");
 const path = require("path");
-const passport = require("passport");
+// const passport = require("passport");
 const cookieSession = require("cookie-session");
 var cookieParser = require("cookie-parser");
 app.use(bodyParser.json());
@@ -21,16 +21,13 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 app.use(cookieParser());
 app.use(function (req, res, next) {
   // console.log("sessiom",req.session);
 
-  res.header(
-    "Access-Control-Allow-Origin",
-    process.env.NODE_ENV ? config["frontEndpoint"] : config["prodfrontEndPoint"]
-  );
+  res.header("Access-Control-Allow-Origin",'*');
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
