@@ -68,7 +68,7 @@ const swaggerDefinition = {
   // Path to the API docs
   host: config.host,
   basePath: "/",
-  schemes: ["http", "https"],
+  schemes: ["https"],
   securityDefinitions: {
     JWT: {},
   },
