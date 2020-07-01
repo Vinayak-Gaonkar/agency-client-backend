@@ -39,12 +39,20 @@ exports.routesConfig = function (app) {
    app.post("/agency", AgencyController.createAgency);
    /**
   * @swagger
-  * /api/client/{agencyId}/{id}:
+  * /api/client/{agencyId}/{clientId}:
   *   put:
   *     tags:
   *       - Agency and Client
   *     description: update client
   *     parameters:
+  *       - name: agencyId
+  *         in: path
+  *         schema:
+  *           type: integer
+  *       - name: clientId
+  *         in: path
+  *         schema:
+  *           type: integer
   *       - name: body
   *         description: parameters
   *         in: body
@@ -136,13 +144,7 @@ exports.routesConfig = function (app) {
 * definition:
 *   updateClient:
 *     properties:
-*       agencyId:
-*         type:string
-*         example:234232
-*       id:
-*         type:string
-*         example:234232
-*       name:
+*       clientName:
 *         type: string
 *         example: 091d855801
 *       email:

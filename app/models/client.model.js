@@ -13,7 +13,7 @@ const Schema = mongoose.Schema;
 const ClientSchema = new Schema(
     {
         clientId: { type: String, unique: true },
-        agencyId: { type: Schema.Types.ObjectId, ref: 'Agency', required: true },
+        agencyId: { type: String, required: true },
         clientName: { type: String, required: true },
         email: { type: String, required: true },
         phoneNumber: { type: String, required: true },
@@ -122,4 +122,7 @@ exports.updateClient = async (clientId, data) => {
     return await Client.updateOne({ clientId: clientId }, { $set: data });
 }
 
+exports.findMax = async (agencyId) => {
+    return await Client.find({ agencyId: agencyId }).sort({totalBill:-1}).limit(1);
+}
 

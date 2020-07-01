@@ -149,7 +149,7 @@ exports.getAllAgency = async () => {
   let lookup = {
     $lookup: {
       from: "clients",
-      localField: "_id",
+      localField: "agencyId",
       foreignField: "agencyId",
       as: "details"
     }
@@ -158,6 +158,7 @@ exports.getAllAgency = async () => {
   let project = {
     $project:
     {
+      agencyId: 1,
       agencyName: 1,
       pets:
       {
@@ -173,7 +174,9 @@ exports.getAllAgency = async () => {
   return await Agency.aggregate([lookup, project])
 }
 
-exports.updateMaxBill = async (id, score) => {
-  return await Agency.updateOne({ AgencyId: id }, { $set: { maxTotalBill: score } })
+exports.updateMaxBill = async (id, score = 0) => {
+  console.log("id->",id,"score->",score);
+  
+  return await Agency.updateOne({ agencyId: id }, { $set: { maxTotalBill: score } })
 }
 

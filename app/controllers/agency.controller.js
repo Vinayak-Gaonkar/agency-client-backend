@@ -11,7 +11,7 @@ exports.createAgency = async (req, res) => {
         //find hieghest totalBill among the clients
         body.maxTotalBill = Math.max.apply(Math, Clients.map(function (o) { return o.totalBill; }))
 
-        //check whether  client already exist
+        //check whether  agency already exist
         let isAgencyExist = await AgencyModel.findAgencyId(body.agencyId);
         console.log("isAgencyExist", isAgencyExist);
 
@@ -31,7 +31,7 @@ exports.createAgency = async (req, res) => {
             throw Error(`clientIds are already exist`)
         } else {
             Clients = Clients.map(ele => {
-                ele.agencyId = (AgencyResult && AgencyResult._id) ? AgencyResult._id : isAgencyExist[0]._id
+                ele.agencyId = (AgencyResult && AgencyResult._id) ? AgencyResult.agencyId : isAgencyExist[0].agencyId
                 return ele
             })
             //create clients in Client collection
@@ -61,10 +61,11 @@ exports.updateClient = async (req, res) => {
 
         let result = await ClientModel.updateClient(clientId, body)
         if (result.n) {
+            let foundMax = await ClientModel.findMax(req.params.agencyId)
             //update the maxTotalBill if total bill is greter than existing
-            if (body.totalBill > isAgencyExist.maxTotalBill) {
-                AgencyModel.updateMaxBill(isAgencyExist.agencyId, body.maxTotalBill)
-            }
+            console.log("isAgencyExist",isAgencyExist,foundMax);
+            
+            AgencyModel.updateMaxBill(req.params.agencyId, foundMax[0].totalBill)
             res.status(200).send({
                 status: "success"
             })
