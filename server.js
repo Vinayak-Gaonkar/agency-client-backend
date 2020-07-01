@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(function (req, res, next) {
   // console.log("sessiom",req.session);
 
-  res.header("Access-Control-Allow-Origin",'*');
+  res.header("Access-Control-Allow-Origin", '*');
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Credentials", true);
   res.header(
@@ -86,6 +86,6 @@ app.use("/api/images", express.static(path.join(__dirname, "/public/images")));
 app.on("listening", function () {
   console.log("ok, server is running", process.env);
 });
-app.listen(config.port, function () {
+app.listen(process.env.PORT || config.port, function () {
   console.log("app listening at port %s", config.port, process.env.NODE_ENV);
 });
